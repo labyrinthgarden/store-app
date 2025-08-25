@@ -1,39 +1,30 @@
-version: '3.8'
 services:
-  # Base de datos principal
-  postgres:
-    image: postgres:13
+  # Servicio de frontend React
+  web-app:
+    build:
+      context: ./web-app
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
     environment:
-      POSTGRES_DB: fashion_store
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: password
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - NODE_ENV=production
+    restart: unless-stopped
+    networks:
+      - app-network
 
-  # Redis para caché y sesiones
-  redis:
-    image: redis:alpine
-    ports:
-      - "6379:6379"
+  # Servicio de productos (ejemplo futuro)
+  #product-service:
+  #  build:
+  #    context: ./services/product-service
+  #    dockerfile: Dockerfile
+  #  ports:
+  #    - "3001:3000"
+  #  environment:
+  #    - NODE_ENV=production
+  #  restart: unless-stopped
+  #  networks:
+  #    - app-network
 
-  # Servicio de productos
-  product-service:
-    build: ./services/product-service
-    ports:
-      - "3001:3000"
-    environment:
-      - NODE_ENV=development
-      - DB_HOST=postgres
-      - DB_PORT=5432
-      - REDIS_HOST=redis
-      - REDIS_PORT=6379
-    depends_on:
-      - postgres
-      - redis
-
-  # Más servicios...
-
-volumes:
-  postgres_data:
+networks:
+  app-network:
+    driver: bridge

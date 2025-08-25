@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  # Base de datos principal
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: fashion_store
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  # Redis para caché y sesiones
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
+
+  # Servicio de productos
+  product-service:
+    build: ./services/product-service
+    ports:
+      - "3001:3000"
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - redis
+
+  # Más servicios...
+
+volumes:
+  postgres_data:

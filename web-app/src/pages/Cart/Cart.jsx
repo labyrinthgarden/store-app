@@ -40,7 +40,7 @@ const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
           <Link to="/">Inicio</Link> / <span>Carrito de Compras</span>
         </div>
 
-        <h1 className="section-title">Tu Carrito de Compras</h1>
+        <h1 className="section-title-cart">Tu Carrito de Compras</h1>
 
         {cartItems.length === 0 ? (
           <div className="empty-cart">

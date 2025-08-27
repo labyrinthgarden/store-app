@@ -87,7 +87,7 @@ const Products = () => {
       name: 'Leggings Deportivos',
       price: 35.99,
       description: 'Leggings elásticos y transpirables para entrenamiento.',
-      image: 'https://images.unsplash.com/photo-1544966503-7cc5ac882d5e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      image: 'https://i.pinimg.com/originals/a6/8b/5c/a68b5ce186611b6b1da2ea9d9cd6cb8a.jpg',
       category: 'deportiva'
     },
     {
@@ -95,7 +95,7 @@ const Products = () => {
       name: 'Vestido de Fiesta',
       price: 99.99,
       description: 'Elegante vestido para ocasiones especiales con 20% de descuento.',
-      image: 'https://images.unsplash.com/photo-1596461404969-9ae70f2830c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80',
+      image: 'https://cdn0.matrimonio.com.co/img_c_8900/0/0/9/8/t30_10_8900.jpg',
       category: 'novedades',
       discount: true
     },

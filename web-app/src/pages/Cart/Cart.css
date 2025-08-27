@@ -68,7 +68,7 @@
   padding: 1.5rem;
 }
 
-.summary-title {
+.summary-title-cart {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--border-color);
@@ -88,4 +88,19 @@
   margin: 1rem 0;
   padding-top: 1rem;
   border-top: 1px solid var(--border-color);
+}
+
+.fas.fa-arrow-left,
+.fas.fa-trash, .breadcrumb a {
+  color: #d41515;
+}
+
+.cart-header {
+  color: rgb(143, 146, 148);
+}
+
+.section-title-cart{
+  color: #e14040;
+  width: fit-content; 
+  margin: 0 auto;
 }

@@ -343,6 +343,7 @@ a:hover {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  color: #d41515;
 }
 
 .btn-clear:hover {
@@ -490,6 +491,7 @@ a:hover {
   align-items: center;
   gap: 0.5rem;
   font-weight: 500;
+  color: #d41515;
 }
 
 .continue-shopping a:hover {

@@ -1,6 +1,6 @@
-// src/pages/Checkout/Checkout.js
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import './checkout.css';
 
 const Checkout = ({ cartItems }) => {
   const navigate = useNavigate();

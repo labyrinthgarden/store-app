@@ -54,3 +54,7 @@
 .order-item-quantity {
   color: var(--text-light);
 }
+
+.section-title {
+  color: rgb(0, 0, 0);
+}

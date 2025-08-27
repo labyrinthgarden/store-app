@@ -9,4 +9,5 @@ Proyecto de una aplicación de servicios distribuidos para una tienda en línea.
 # Preview Screenshots
 ![Vista 1](preview/1.PNG)
 ![Vista 2](preview/2.PNG)
-![Vista 2](preview/3.PNG)
+![Vista 3](preview/3.PNG)
+![Vista 4](preview/4.PNG)

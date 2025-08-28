@@ -6,6 +6,10 @@ import './Products.css';
 const Products = () => {
   const { categoryName } = useParams();
   const navigate = useNavigate();
+
+  //filtros y búsqueda
+  const [searchTerm, setSearchTerm] = useState('');
+  const [priceFilter, setPriceFilter] = useState('all');
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   // Datos de ejemplo para productos
@@ -112,17 +116,33 @@ const Products = () => {
 
   // Efecto para filtrar productos cuando cambia la categoria en la URL
   useEffect(() => {
+    let filtered = allProducts;
     if (categoryName) {
-      const filtered = allProducts.filter(product =>
+      filtered = filtered.filter(product =>
         product.category.toLowerCase() === categoryName.toLowerCase()
       );
-      setFilteredProducts(filtered);
-    } else {
-      setFilteredProducts(allProducts);
+
     }
-  }, [categoryName]);
+    if (searchTerm) {
+      filtered = filtered.filter(product =>
+        product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+    if (priceFilter !== 'all') {
+      filtered = filtered.filter(product => {
+        if (priceFilter === 'under50') return product.price < 50;
+        if (priceFilter === '50to100') return product.price >= 50 && product.price <= 100;
+        if (priceFilter === 'over100') return product.price > 100;
+        return true;
+      });
+    }
+    setFilteredProducts(filtered);
+  }, [categoryName, searchTerm, priceFilter]);
 
   const clearFilter = () => {
+    setSearchTerm('');
+    setPriceFilter('all');
     navigate('/products');
   };
 
@@ -150,6 +170,31 @@ const Products = () => {
           <h1 className="section-title">
             {getCategoryTitle()}
           </h1>
+          <div className="filters-container">
+            {/* Barra de búsqueda */}
+            <div className="search-bar">
+              <input
+                type="text"
+                placeholder="  Buscar productos..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+              />
+            </div>
+            {/* Filtro de precio */}
+            <div className="select-filter">
+              <select value={priceFilter} onChange={(e) => setPriceFilter(e.target.value)}>
+                <option value="all">Todos los precios</option>
+                <option value="under50">Menos de $50</option>
+                <option value="50to100">$50- $100</option>
+                <option value="over100">Más de $100</option>
+              </select>
+            </div>
+            {(searchTerm || priceFilter !== 'all') && (
+              <button className="clear-btn" onClick={clearFilter}>
+                Limpiar filtros
+              </button>
+            )}
+          </div>
 
           {categoryName && (
             <button className="btn btn-primary" onClick={clearFilter}>

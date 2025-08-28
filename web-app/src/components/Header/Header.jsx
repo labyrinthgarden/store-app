@@ -4,6 +4,7 @@ import './Header.css';
 
 const Header = ({ cartItemCount }) => {
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
+  const closeTimeout = React.useRef(null);
 
   const categories = [
     { name: 'Mujer', path: '/category/mujer' },
@@ -15,9 +16,18 @@ const Header = ({ cartItemCount }) => {
     { name: 'Ofertas', path: '/category/ofertas' }
   ];
 
-  const closeCategories = () => {
-    setIsCategoriesOpen(false);
+  const handleMouseEnter = () => {
+    clearTimeout(closeTimeout.current);
+    setIsCategoriesOpen(true);
   };
+
+  const handleMouseLeave = () => {
+    closeTimeout.current = setTimeout(() => {
+      setIsCategoriesOpen(false);
+    }, 100); //delay de 100ms
+  };
+
+  
 
   return (
     <header className="header">
@@ -39,8 +49,8 @@ const Header = ({ cartItemCount }) => {
               {/* Elemento de categorías con menu desplegable */}
               <li
                 className="nav-item categories-item"
-                onMouseEnter={() => setIsCategoriesOpen(true)}
-                onMouseLeave={closeCategories}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
               >
                 <div className="nav-link categories-toggle">
                   <i className="fa-solid fa-list"></i> Categorías <i className="fas fa-chevron-down"></i>
@@ -54,7 +64,7 @@ const Header = ({ cartItemCount }) => {
                           key={index}
                           to={category.path}
                           className="dropdown-item"
-                          onClick={closeCategories}
+                          onClick={() => setIsCategoriesOpen(false)}
                         >
                           {category.name}
                         </Link>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './checkout.css';
 
-const Checkout = ({ cartItems }) => {
+const Checkout = ({ cartItems, clearCart }) => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -26,8 +26,8 @@ const Checkout = ({ cartItems }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí procesarías el pago en una aplicación real
     alert('¡Pedido realizado con éxito!');
+    clearCart();
     navigate('/');
   };
 

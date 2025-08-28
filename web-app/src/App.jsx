@@ -96,6 +96,7 @@ function App() {
               element={
                 <Checkout
                   cartItems={cartItems}
+                  clearCart={clearCart}
                 />
               }
             />

@@ -1,10 +1,37 @@
-import React from 'react';
+import React, { use, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+
+  const heroImages = [
+    "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1503341455253-b2e723bb3dbb?auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1483985988355-763728e1935b?&auto=format&fit=crop&w=1600&q=80",
+    "https://images.unsplash.com/photo-1506152983158-b4a74a01c721?q=80&w=873&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  ];
+  const [currentImage, setCurrentImage] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImage((prev) => (prev + 1) % heroImages.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, []);
+  const handlePrev = () => {
+    setCurrentImage((prev) =>
+      prev === 0 ? heroImages.length - 1 : prev - 1
+    );
+  };
+
+  const handleNext = () => {
+    setCurrentImage((prev) =>
+      prev === heroImages.length - 1 ? 0 : prev + 1
+    );
+  };
 
   // Datos de ejemplo para productos destacados
   const featuredProducts = [
@@ -39,22 +66,40 @@ const Home = () => {
   ];
 
   return (
-    <div className="home-container">
-      <section className="hero">
-        <div className="container">
-          <h1 className="hero-title">Descubre tu estilo único</h1>
-          <p className="hero-subtitle">
-            Encuentra las últimas tendencias en moda para hombre y mujer.
-            Calidad premium a precios increíbles.
-          </p>
-          <button
-            className="btn btn-primary"
-            onClick={() => navigate('/products')}
-          >
-            Comprar ahora
+    <div className="home-container" >
+      <section className="hero" style={{ backgroundImage: `url(${heroImages[currentImage]})` }}>
+        <div className="overlay">
+          <div className="hero-content">
+            <h1 className="hero-title">Descubre tu estilo único</h1>
+            <p className="hero-subtitle">
+              Encuentra las últimas tendencias en moda para hombre y mujer.
+              Calidad premium a precios increíbles.
+            </p>
+            <button
+              className="btn btn-primary"
+              onClick={() => navigate('/products')}
+            >
+              Comprar ahora
+            </button>
+          </div>
+          <button className="arrow left" onClick={handlePrev}>
+            ❮
+          </button>
+          <button className="arrow right" onClick={handleNext}>
+            ❯
           </button>
         </div>
+
       </section>
+      <div className="dots-container">
+        {heroImages.map((_, index) => (
+          <span
+            key={index}
+            className={`dot ${currentImage === index ? 'active' : ''}`}
+            onClick={() => setCurrentImage(index)}
+          ></span>
+        ))}
+      </div>
 
       <section className="featured-section">
         <div className="container">

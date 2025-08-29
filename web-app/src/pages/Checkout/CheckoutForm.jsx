@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import './checkout.css';
+import './Checkout.css';
 
 const API_URL = 'http://localhost:3000';
 

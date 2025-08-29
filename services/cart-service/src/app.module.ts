@@ -8,7 +8,8 @@ import { PaymentsModule } from './payments/payments.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    PaymentsModule,
+    
   ],
+  providers: [PaymentsModule],
 })
 export class AppModule {}

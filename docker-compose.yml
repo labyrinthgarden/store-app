@@ -53,12 +53,15 @@ services:
       - "5432:5432"
   cart-service:
     build: ./services/cart-service
+    env_file:
+    - ./services/cart-service/.env
     environment:
       - DB_HOST=postgres-cart
       - DB_PORT=5432
       - DB_USERNAME=user
       - DB_PASSWORD=password
       - DB_NAME=cart_db
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
     depends_on:
       postgres-cart:
         condition: service_healthy

@@ -1,6 +1,6 @@
 # services/cart/Dockerfile
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 WORKDIR /usr/src/app
 
 # install dependencies (dev + prod)
@@ -15,7 +15,7 @@ RUN npm run build
 RUN npm prune --production
 
 # Final stage
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 WORKDIR /usr/src/app
 ENV NODE_ENV=production
 

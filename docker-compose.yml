@@ -10,11 +10,8 @@ services:
     ports: ["3001:3000"]
     environment:
       - PRODUCT_SERVICE_URL=http://product-service:3000
-      - CART_SERVICE_URL=http://cart-service:3000
     depends_on:
       product-service:
-        condition: service_healthy
-      cart-service:
         condition: service_healthy
 
   product-service:
@@ -51,6 +48,7 @@ services:
       retries: 10
     ports:
       - "5432:5432"
+<<<<<<< HEAD
   cart-service:
     build: ./services/cart-service
     env_file:
@@ -87,7 +85,8 @@ services:
       retries: 10
     ports:
       - "5433:5432"
+=======
+>>>>>>> parent of 5816f41 (Integracion Cart con  Gateway)
 
 volumes:
   postgres_products_data:
-  postgres_cart_data:

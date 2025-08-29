@@ -48,45 +48,6 @@ services:
       retries: 10
     ports:
       - "5432:5432"
-<<<<<<< HEAD
-  cart-service:
-    build: ./services/cart-service
-    env_file:
-    - ./services/cart-service/.env
-    environment:
-      - DB_HOST=postgres-cart
-      - DB_PORT=5432
-      - DB_USERNAME=user
-      - DB_PASSWORD=password
-      - DB_NAME=cart_db
-      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
-    depends_on:
-      postgres-cart:
-        condition: service_healthy
-    healthcheck:
-      test: ["CMD", "nc", "-z", "localhost", "3000"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
-  postgres-cart:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_DB=cart_db
-      - POSTGRES_USER=user
-      - POSTGRES_PASSWORD=password
-    volumes:
-      - postgres_cart_data:/var/lib/postgresql/data
-      - ./init-cart.sql:/docker-entrypoint-initdb.d/init.sql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d cart_db"]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    ports:
-      - "5433:5432"
-=======
->>>>>>> parent of 5816f41 (Integracion Cart con  Gateway)
 
 volumes:
   postgres_products_data:

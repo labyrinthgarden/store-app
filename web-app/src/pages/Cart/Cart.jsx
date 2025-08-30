@@ -1,13 +1,32 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CartItem from '../../components/CartItem/CartItem';
+import cartEvents from '../../events/cart-events.js';
 import './Cart.css';
 
-const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
-  const navigate = useNavigate();
 
+const Cart = ({ cartItems, removeFromCart, updateQuantity, clearCart }) => {
+  const [items, setItems] = useState(cartItems);
+  const navigate = useNavigate();
+  useEffect(() => {
+    const handleCartUpdate = (event) => {
+      const { id, size, quantity, removed } = event.detail;
+      setItems((prevItems) =>
+        prevItems.map((item) =>
+          item.id === id && item.size === size ? { ...item, quantity } : item
+        )
+      );
+    };
+
+    cartEvents.addEventListener('cartUpdated', handleCartUpdate);
+
+    return () => {
+      cartEvents.removeEventListener('cartUpdated', handleCartUpdate);
+    };
+  }, []);
   // Calcular totales
-  const subtotal = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const subtotal = items.reduce((total, item) => total + (item.price * item.quantity), 0);
   const shipping = subtotal > 0 && subtotal < 100 ? 5.99 : 0;
   const discount = subtotal > 200 ? subtotal * 0.1 : 0; // 10% de descuento para compras > $200
   const total = subtotal + shipping - discount;

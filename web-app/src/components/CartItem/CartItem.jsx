@@ -1,11 +1,17 @@
 // src/components/CartItem/CartItem.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
+import cartEvents from '../../events/cart-events';
+
 
 const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
   const handleQuantityChange = (newQuantity) => {
     if (newQuantity < 1) return;
     onUpdateQuantity(item.id, item.size, newQuantity);
+
+    // Despachar evento indicando que el carrito cambió
+    cartEvents.dispatchEvent(new CustomEvent('cartUpdated', { detail: { id: item.id, size: item.size, quantity: newQuantity } }));
+
   };
 
   const handleInputChange = (e) => {
@@ -41,7 +47,10 @@ const CartItem = ({ item, onRemove, onUpdateQuantity }) => {
 
         <button
           className="cart-item-remove"
-          onClick={() => onRemove(item.id, item.size)}
+          onClick={() =>{
+            onRemove(item.id, item.size);
+            cartEvents.dispatchEvent(new CustomEvent('cartUpdated', { detail: { id: item.id, size: item.size, removed: true } }));
+          }}
         >
           <i className="fas fa-trash"></i> Eliminar
         </button>

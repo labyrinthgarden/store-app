@@ -10,10 +10,12 @@ services:
     ports: ["3001:3000"]
     environment:
       - PRODUCT_SERVICE_URL=http://product-service:3000
+      - CART_SERVICE_URL=http://cart-service:3000
     depends_on:
       product-service:
         condition: service_healthy
-
+      cart-service:                
+        condition: service_started
   product-service:
     build: ./services/product-service
     environment:
@@ -31,7 +33,19 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
-
+  cart-service:
+    build: ./services/cart-service
+    environment:
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - PORT=3000
+    expose:
+      - "3000"
+    healthcheck:
+      test: ["CMD", "nc", "-z", "localhost", "3000"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
   postgres-products:
     image: postgres:15-alpine
     environment:

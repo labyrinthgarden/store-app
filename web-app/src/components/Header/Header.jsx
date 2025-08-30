@@ -34,7 +34,7 @@ const Header = ({ cartItemCount }) => {
       <div className="container">
         <div className="header-content">
           <Link to="/" className="logo">
-            Fashion<span>Store</span>
+            FS-<span>Store</span>
           </Link>
 
           <nav>

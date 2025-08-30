@@ -27,6 +27,17 @@ body {
   background-color: var(--light-color);
 }
 
+.select-filter select,
+.select-filter select:focus,
+.select-filter select:hover {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none; 
+  border: none;
+  outline: none;
+  background-color: #000;
+}
+
 .app {
   min-height: 100vh;
   display: flex;

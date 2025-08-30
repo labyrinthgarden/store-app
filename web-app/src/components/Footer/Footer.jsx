@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3 className="footer-heading">FashionStore</h3>
+            <h3 className="footer-heading">FS-Store</h3>
             <p>Tu tienda de moda online con las últimas tendencias y los mejores precios.</p>
           </div>
 
@@ -17,13 +17,13 @@ const Footer = () => {
             <ul className="footer-links">
               <li><i className="fas fa-map-marker-alt"></i> Calle Principal 123, Ciudad</li>
               <li><i className="fas fa-phone"></i> +1 234 567 890</li>
-              <li><i className="fas fa-envelope"></i> info@fashionstore.com</li>
+              <li><i className="fas fa-envelope"></i> info@FS-Store.com</li>
             </ul>
           </div>
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; 2023 FashionStore. Todos los derechos reservados.</p>
+          <p>&copy; 2023 FS-Store. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>

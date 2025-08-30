@@ -6,8 +6,7 @@ async function bootstrap() {
   app.enableCors({
     origin: 'http://localhost:5173', // Tu frontend
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
   });
-  await app.listen(process.env.PORT ?? 3001);
+  await app.listen(process.env.PORT ?? 3000);
 }
 bootstrap();

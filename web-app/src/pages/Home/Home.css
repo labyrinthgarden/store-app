@@ -90,8 +90,8 @@
 }
 .dots-container {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
+  justify-content: center;
+  align-items: center;
   gap: 8px;
   margin-top: 15px;
   width: 100%;
@@ -251,6 +251,17 @@
   .feature-item {
     padding: 1.5rem;
   }
+}
+
+.error-container {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: #dc3545;
+}
+
+.error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
 }
 
 @media (max-width: 480px) {

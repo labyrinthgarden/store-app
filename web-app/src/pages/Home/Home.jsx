@@ -1,10 +1,12 @@
-import React, { use, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useProducts } from '../../hooks/useProducts';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import './Home.css';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { featuredProducts, error } = useProducts();
 
   const heroImages = [
     "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1600&q=80",
@@ -33,37 +35,19 @@ const Home = () => {
     );
   };
 
-  // Datos de ejemplo para productos destacados
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Vestido de Verano',
-      price: 49.99,
-      description: 'Vestido ligero perfecto para los días calurosos de verano.',
-      image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      id: 2,
-      name: 'Camisa de Lino',
-      price: 39.99,
-      description: 'Camisa de lino 100% natural, fresca y elegante.',
-      image: 'https://images.unsplash.com/photo-1598033129183-c4f50c736f10?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      id: 3,
-      name: 'Zapatos de Cuero',
-      price: 89.99,
-      description: 'Zapatos de cuero genuino con suela antideslizante.',
-      image: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    },
-    {
-      id: 4,
-      name: 'Bolso de Mano',
-      price: 59.99,
-      description: 'Bolso elegante con espacio suficiente para todos tus essentials.',
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80'
-    }
-  ];
+  if (error) {
+    return (
+      <div className="home-container">
+        <div className="error-container">
+          <i className="fas fa-exclamation-triangle error-icon"></i>
+          <h3>Error al cargar los productos</h3>
+          <p style={{padding:'55px'}}>{error}</p>
+          <button className="btn btn-primary"
+            onClick={() => window.location.reload()}>Reintentar</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="home-container" >

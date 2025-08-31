@@ -1,5 +1,6 @@
 // src/App.js
 import React, { useState } from 'react';
+import { ProductProvider } from './context/ProductContext';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
@@ -55,56 +56,58 @@ function App() {
   };
 
   return (
-    <Router>
-      <div className="app">
-        <Header cartItemCount={cartItems.reduce((total, item) => total + item.quantity, 0)} />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route
-              path="/products"
-              element={
-                <Products
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                />
-              }
-            />
-            <Route
-              path="/category/:categoryName"
-              element={
-                <Products
-                  selectedCategory={selectedCategory}
-                  setSelectedCategory={setSelectedCategory}
-                />
-              }
-            />
-            <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
-            <Route
-              path="/cart"
-              element={
-                <Cart
-                  cartItems={cartItems}
-                  removeFromCart={removeFromCart}
-                  updateQuantity={updateQuantity}
-                  clearCart={clearCart}
-                />
-              }
-            />
-            <Route
-              path="/checkout"
-              element={
-                <Checkout
-                  cartItems={cartItems}
-                  clearCart={clearCart}
-                />
-              }
-            />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <ProductProvider>
+      <Router>
+        <div className="app">
+          <Header cartItemCount={cartItems.reduce((total, item) => total + item.quantity, 0)} />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route
+                path="/products"
+                element={
+                  <Products
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                  />
+                }
+              />
+              <Route
+                path="/category/:categoryName"
+                element={
+                  <Products
+                    selectedCategory={selectedCategory}
+                    setSelectedCategory={setSelectedCategory}
+                  />
+                }
+              />
+              <Route path="/product/:id" element={<ProductDetail addToCart={addToCart} />} />
+              <Route
+                path="/cart"
+                element={
+                  <Cart
+                    cartItems={cartItems}
+                    removeFromCart={removeFromCart}
+                    updateQuantity={updateQuantity}
+                    clearCart={clearCart}
+                  />
+                }
+              />
+              <Route
+                path="/checkout"
+                element={
+                  <Checkout
+                    cartItems={cartItems}
+                    clearCart={clearCart}
+                  />
+                }
+              />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </Router>
+    </ProductProvider>
   );
 }
 

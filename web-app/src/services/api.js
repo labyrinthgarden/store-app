@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api-gateway',
+  baseURL: '/api/',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -21,7 +21,8 @@ export const productService = {
 
   getFeaturedProducts: async () => {
     try {
-      const response = await api.get('/products?featured=true');
+      const response = await api.get('products?featured=true');
+      console.log("FAFaaaaAAAA1",response.data);
       return response.data;
     } catch (error) {
       console.error('Error fetching featured products:', error);

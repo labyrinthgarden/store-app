@@ -14,10 +14,12 @@ services:
     depends_on:
       product-service:
         condition: service_healthy
-      cart-service:                
+      cart-service:
         condition: service_started
   product-service:
     build: ./services/product-service
+    ports:
+      - "3003:3000"
     environment:
       - DB_HOST=postgres-products
       - DB_PORT=5432
@@ -56,7 +58,7 @@ services:
       - POSTGRES_PASSWORD=password
     volumes:
       - postgres_products_data:/var/lib/postgresql/data
-      - ./init-products.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./init-products.sql:/docker-entrypoint-initdb.d/init-products.sql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U user -d products_db"]
       interval: 5s

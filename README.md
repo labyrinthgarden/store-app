@@ -12,3 +12,4 @@ Proyecto de una aplicación de servicios distribuidos para una tienda en línea.
 ![Vista 2](preview/2.PNG)
 ![Vista 3](preview/3.PNG)
 ![Vista 4](preview/4.PNG)
+![Vista 5](preview/5.PNG)

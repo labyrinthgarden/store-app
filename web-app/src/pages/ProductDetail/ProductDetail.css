@@ -69,7 +69,7 @@
 }
 
 .size-option:hover, .size-option.selected {
-  background-color: var(--primary-color);
+  background-color: var(--primary-hover-color);
   color: white;
   border-color: var(--primary-color);
 }

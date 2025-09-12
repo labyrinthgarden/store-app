@@ -1,33 +1,28 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ProductsService } from './products.service';
-import { Product } from './product.entity';
+import { Product } from './entities/product.entity';
 
 @Controller('products')
 export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Get()
-  findAll() {
+  async findAll(): Promise<Product[]> {
     return this.productsService.findAll();
   }
 
   @Get('category/:category')
-  findByCategory(@Param('category') category: string) {
+  async findByCategory(@Param('category') category: string): Promise<Product[]> {
     return this.productsService.findByCategory(category);
   }
 
-  @Get('discounted')
-  findDiscounted() {
+  @Get('offers')
+  async findDiscounted(): Promise<Product[]> {
     return this.productsService.findDiscounted();
   }
 
-  @Get('search')
-  search(@Query('q') query: string) {
-    return this.productsService.searchProducts(query);
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  async findOne(@Param('id') id: string): Promise<Product> {
     return this.productsService.findOne(+id);
   }
 }

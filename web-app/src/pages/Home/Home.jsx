@@ -7,6 +7,7 @@ import './Home.css';
 const Home = () => {
   const navigate = useNavigate();
   const { featuredProducts, error } = useProducts();
+  const [isLoading, setIsLoading] = useState(true); // Estado de carga
 
   const heroImages = [
     "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?auto=format&fit=crop&w=1600&q=80",
@@ -23,16 +24,19 @@ const Home = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  useEffect(() => {
+    if (featuredProducts) {
+      setIsLoading(false);
+    }
+  }, [featuredProducts]);
+
   const handlePrev = () => {
-    setCurrentImage((prev) =>
-      prev === 0 ? heroImages.length - 1 : prev - 1
-    );
+    setCurrentImage((prev) => (prev === 0 ? heroImages.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentImage((prev) =>
-      prev === heroImages.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImage((prev) => (prev === heroImages.length - 1 ? 0 : prev + 1));
   };
 
   if (error) {
@@ -42,15 +46,16 @@ const Home = () => {
           <i className="fas fa-exclamation-triangle error-icon"></i>
           <h3>Error al cargar los productos</h3>
           <p style={{padding:'55px'}}>{error}</p>
-          <button className="btn btn-primary"
-            onClick={() => window.location.reload()}>Reintentar</button>
+          <button className="btn btn-primary" onClick={() => window.location.reload()}>
+            Reintentar
+          </button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="home-container" >
+    <div className="home-container">
       <section className="hero" style={{ backgroundImage: `url(${heroImages[currentImage]})` }}>
         <div className="overlay">
           <div className="hero-content">
@@ -59,21 +64,13 @@ const Home = () => {
               Encuentra las últimas tendencias en moda para hombre y mujer.
               Calidad premium a precios increíbles.
             </p>
-            <button
-              className="btn btn-primary"
-              onClick={() => navigate('/products')}
-            >
+            <button className="btn btn-primary" onClick={() => navigate('/products')}>
               Comprar ahora
             </button>
           </div>
-          <button className="arrow left" onClick={handlePrev}>
-            ❮
-          </button>
-          <button className="arrow right" onClick={handleNext}>
-            ❯
-          </button>
+          <button className="arrow left" onClick={handlePrev}>❮</button>
+          <button className="arrow right" onClick={handleNext}>❯</button>
         </div>
-
       </section>
       <div className="dots-container">
         {heroImages.map((_, index) => (
@@ -88,14 +85,16 @@ const Home = () => {
       <section className="featured-section">
         <div className="container">
           <h2 className="section-title">Productos Destacados</h2>
-          <div className="products-grid">
-            {featuredProducts.map(product => (
-              <ProductCard
-                key={product.id}
-                product={product}
-              />
-            ))}
-          </div>
+          {isLoading ? (
+            <p>Cargando productos...</p> // Mensaje de carga
+          ) : (
+            <div className="products-grid">
+              {/* Verifica que featuredProducts sea un array antes de mapear */}
+              {Array.isArray(featuredProducts) && featuredProducts.map(product => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 

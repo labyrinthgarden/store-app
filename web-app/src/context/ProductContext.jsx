@@ -13,7 +13,13 @@ export const ProductProvider = ({ children }) => {
       try {
         setLoading(true);
         const productsData = await productService.getProducts();
-        setProducts(productsData);
+
+        // Convertir precios de string a número
+        const formattedProducts = productsData.map(product => ({
+          ...product,
+          price: parseFloat(product.price) || 0,      }));
+
+        setProducts(formattedProducts);
         setError(null);
       } catch (err) {
         setError(err.response?.data?.message || 'Error al cargar los productos');

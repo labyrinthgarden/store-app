@@ -1,25 +1,26 @@
-FROM node:20-alpine AS builder
+FROM node:18-alpine As development
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm ci
+
+RUN npm install
 
 COPY . .
+
 RUN npm run build
 
-FROM node:20-alpine
+FROM node:18-alpine as production
 
-# Instalar herramientas para healthchecks
-RUN apk add --no-cache curl wget netcat-openbsd
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 
 WORKDIR /usr/src/app
 
 COPY package*.json ./
-RUN npm ci --only=production
 
-COPY --from=builder /usr/src/app/dist ./dist
+RUN npm install --only=production
 
-EXPOSE 3000
+COPY --from=development /usr/src/app/dist ./dist
 
 CMD ["node", "dist/main"]

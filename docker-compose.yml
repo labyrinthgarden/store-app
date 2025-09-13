@@ -7,7 +7,8 @@ services:
 
   api-gateway:
     build: ./services/api-gateway
-    ports: ["3002:3000"]
+    ports:
+      - "3000"
     environment:
       - PRODUCT_SERVICE_URL=http://product-service:3000
       - CART_SERVICE_URL=http://cart-service:3000
@@ -19,7 +20,7 @@ services:
   product-service:
     build: ./services/product-service
     ports:
-      - "3003:3000"
+      - "3000"
     environment:
       - DB_HOST=postgres-products
       - DB_PORT=5432
@@ -38,12 +39,10 @@ services:
   cart-service:
     build: ./services/cart-service
     ports:
-      - "3001:3001"
+      - "3001"
     environment:
       - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
       - PORT=3001
-    expose:
-      - "3001"
     healthcheck:
       test: ["CMD", "nc", "-z", "localhost", "3001"]
       interval: 10s
@@ -65,7 +64,7 @@ services:
       timeout: 5s
       retries: 10
     ports:
-      - "5432:5432"
+      - "5432"
 
 volumes:
   postgres_products_data:
